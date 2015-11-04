@@ -1,11 +1,11 @@
 import glob
 import gzip
-import cPickle as pickle
 import numpy as np
+import cPickle as pickle
+import progressbar as pb
 from photoz import find_photo_z
 from randomForest import obtain_proba
 from survivalFunc import find_percentile
-import progressbar as pb
 
 
 def iterator(type, my_dir, file_dir, filter1, filter2, filter3,
@@ -18,7 +18,7 @@ def iterator(type, my_dir, file_dir, filter1, filter2, filter3,
               photo_z
     '''
 
-    widgets=[pb.ETA(), pb.Percentage()]
+    widgets = [pb.ETA(), pb.Percentage()]
 
     files = []
     my_z = []
