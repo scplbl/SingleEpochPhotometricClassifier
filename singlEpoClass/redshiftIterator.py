@@ -5,6 +5,7 @@ import numpy as np
 from photoz import find_photo_z
 from randomForest import obtain_proba
 from survivalFunc import find_percentile
+import progressbar as pb
 
 
 def iterator(type, my_dir, file_dir, filter1, filter2, filter3,
@@ -16,6 +17,9 @@ def iterator(type, my_dir, file_dir, filter1, filter2, filter3,
               survival (survival function)
               photo_z
     '''
+
+    widgets=[pb.ETA(), pb.Percentage()]
+
     files = []
     my_z = []
     quant = []
@@ -37,6 +41,7 @@ def iterator(type, my_dir, file_dir, filter1, filter2, filter3,
             quant.append(RF)
 
     elif type == 'survival':
+        pbar = pb.ProgressBar(widgets=widgets, maxval=len(files[0])).start()
         for i in range(len(files[0])):
             survival_f = find_percentile(my_dir, file_dir, filter1, filter2,
                                          filter3, flux_filter1, flux_filter2,
@@ -44,6 +49,8 @@ def iterator(type, my_dir, file_dir, filter1, filter2, filter3,
                                          flux_filter2_err, flux_filter3_err,
                                          z[i])
             quant.append(survival_f)
+            pbar.update(i)
+        pbar.finish()
 
     elif type == 'photo_z':
         if photo_z_type == 'file':

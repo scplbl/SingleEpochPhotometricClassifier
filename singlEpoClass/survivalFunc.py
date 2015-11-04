@@ -29,7 +29,7 @@ def find_percentile(my_dir, file_dir, filter1, filter2, filter3, flux_filter1,
     mc_dict = add_error(mc_dict, filter2, flux_filter2_err)
     mc_dict = add_error(mc_dict, filter3, flux_filter3_err)
 
-    print 'redshift: ', z
+    # print 'redshift: ', z
 
     Ia_percentile = kde3d(mc_dict['type_Ia']['flux'][filter1],
                           mc_dict['type_Ia']['flux'][filter2],

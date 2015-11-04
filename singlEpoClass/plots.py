@@ -4,6 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from funcsForSimulatedData import load, file_name, mask
 from redshiftIterator import save_arrays, iterator
+import progressbar as pb
 
 
 def flux_fluxDiff_arrays(my_dir, file_dir, filter1, filter2, z):
@@ -183,6 +184,7 @@ def combined(final_pdf, my_dir, file_dir, filter1, filter2,
              flux_filter1_err, flux_filter2_err, flux_filter3_err, outdir,
              file_with_RF_and_SF_arrays, photo_z_type=None, photo_z_file=None,
              photo_z_redshift_file=None, mu=None, sigma=None):
+
 
     if not os.path.exists(outdir):
         os.makedirs(outdir)
