@@ -109,20 +109,20 @@ def plot(x, y, ylabel, title, outdir, outname=None):
     sns.set_context("paper", font_scale=1.5, rc={"lines.linewidth": 2.5})
     plot_name = title.replace(' ', '-')
     plot_name = plot_name.lower()
+    plot_name = plot_name + '.png'
     if outname is not None:
         plot_name = outname
-
     plt.plot(x, y)
     plt.title(title)
     plt.xlabel('z')
     plt.ylabel(ylabel)
     plt.legend(['Type Ia', 'Type Ib/c', 'Type II'], loc='upper right')
     # plt.show()
-    plt.savefig(outdir + plot_name + '.png')
+    plt.savefig(outdir + plot_name)
     plt.close()
 
 
-def subplot(x, y, title, outdir, title_photoz=None):
+def subplot(x, y, title, outdir, final_pdf_name, title_photoz=None):
     ''' x, y and title are arrays
     '''
     new_title = [s for s in title if s]
@@ -140,6 +140,9 @@ def subplot(x, y, title, outdir, title_photoz=None):
     # Getting a plot name for the final PDF composed from the other names
     plot_name = plot_name.replace(' ', '-')
     plot_name = plot_name.lower()
+    plot_name = plot_name + '.png'
+    if final_pdf_name != 'default':
+        plot_name = final_pdf_name
 
     if title_photoz is not None:
         title[2] = title_photoz
@@ -170,18 +173,19 @@ def subplot(x, y, title, outdir, title_photoz=None):
     ax4.set_xlabel('z')
     # Saving combined plot
     extent = ax4.get_window_extent().transformed(f.dpi_scale_trans.inverted())
-    f.savefig(outdir + plot_name + '_single.png',
+    f.savefig(outdir + 'single_' + plot_name,
               bbox_inches=extent.expanded(1.3, 1.3))
-
-    # plt.show()
-    plt.savefig(outdir + plot_name + '.png')
+    plt.savefig(outdir + plot_name)
     plt.close()
 
 
-def combined(final_pdf, my_dir, file_dir, filter1, filter2,
-             filter3, flux_filter1, flux_filter2, flux_filter3,
-             flux_filter1_err, flux_filter2_err, flux_filter3_err, outdir,
-             file_with_RF_and_SF_arrays, photo_z_type=None, photo_z_file=None,
+def combined(final_pdf, my_dir, file_dir,
+             filter1, filter2, filter3,
+             flux_filter1, flux_filter2, flux_filter3,
+             flux_filter1_err, flux_filter2_err, flux_filter3_err,
+             outdir, file_with_RF_and_SF_arrays, photoz_plot_name,
+             random_forest_plot_name, survival_function_plot_name,
+             final_pdf_plot_name, photo_z_type=None, photo_z_file=None,
              photo_z_redshift_file=None, mu=None, sigma=None):
 
     if not os.path.exists(outdir):
@@ -221,36 +225,41 @@ def combined(final_pdf, my_dir, file_dir, filter1, filter2,
     if final_pdf == 'RF+SF+photoz':
         plt.clf()
         title = ['Random Forest', 'Survival Function', 'Photo-z']
-        plot(z, rf, 'PDF', 'Random Forest', outdir)
-        plot(z, sf, '1 - CDF', 'Survival Function', outdir)
-        plot(z, photo_z, 'PDF', title_photoz, outdir, outname='photoz')
+        plot(z, rf, 'PDF', 'Random Forest', outdir,
+             outname=random_forest_plot_name)
+        plot(z, sf, '1 - CDF', 'Survival Function', outdir,
+             outname=survival_function_plot_name)
+        plot(z, photo_z, 'PDF', title_photoz, outdir, outname=photoz_plot_name)
 
         first_product = np.multiply(sf, rf)
         product = (np.multiply(first_product.T, photo_z)).T
 
         x = [z, z, z, z]
         y = [rf, sf, photo_z, product]
-        subplot(x, y, title, outdir, title_photoz)
+        subplot(x, y, title, outdir, final_pdf_plot_name, title_photoz)
         # norm_product = product/product.sum()
 
     elif final_pdf == 'RF+SF':
         plt.clf()
         title = ['Random Forest', 'Survival Function', '']
-        plot(z, rf, 'PDF', 'Random Forest', outdir)
-        plot(z, sf, '1 - CDF', 'Survival Function', outdir)
+        plot(z, rf, 'PDF', 'Random Forest', outdir,
+             outname=random_forest_plot_name)
+        plot(z, sf, '1 - CDF', 'Survival Function', outdir,
+             outname=survival_function_plot_name)
         product = np.multiply(rf, sf)
 
         x = [z, z, [], z]
         y = [rf, sf, [], product]
-        subplot(x, y, title, outdir)
+        subplot(x, y, title, outdir, final_pdf_plot_name)
 
         # norm_product = product/product.sum()
 
     elif final_pdf == 'RF+photoz':
         plt.clf()
         title = ['Random Forest', '', 'Photo-z']
-        plot(z, rf, 'PDF', 'Random Forest', outdir)
-        plot(z, photo_z, 'PDF', title_photoz, outdir, outname='photoz')
+        plot(z, rf, 'PDF', 'Random Forest', outdir,
+             outname=random_forest_plot_name)
+        plot(z, photo_z, 'PDF', title_photoz, outdir, outname=photoz_plot_name)
 
         product = np.multiply(rf.T, photo_z)
         product = product.T
@@ -258,13 +267,14 @@ def combined(final_pdf, my_dir, file_dir, filter1, filter2,
 
         x = [z, [], z, z]
         y = [rf, [], photo_z, product]
-        subplot(x, y, title, outdir, title_photoz)
+        subplot(x, y, title, outdir, final_pdf_plot_name, title_photoz)
 
     elif final_pdf == 'SF+photoz':
         plt.clf()
         title = ['', 'Survival Function', 'Photo-z']
-        plot(z, sf, '1 - CDF', 'Survival Function', outdir)
-        plot(z, photo_z, 'PDF', title_photoz, outdir, outname='photoz')
+        plot(z, sf, '1 - CDF', 'Survival Function', outdir,
+             outname=survival_function_plot_name)
+        plot(z, photo_z, 'PDF', title_photoz, outdir, outname=photoz_plot_name)
 
         product = np.multiply(sf.T, photo_z)
         product = product.T
@@ -272,16 +282,18 @@ def combined(final_pdf, my_dir, file_dir, filter1, filter2,
 
         x = [[], z, z, z]
         y = [[], sf, photo_z, product]
-        subplot(x, y, title, outdir, title_photoz)
+        subplot(x, y, title, outdir, final_pdf_plot_name, title_photoz)
 
     elif final_pdf == 'RF':
         plt.clf()
-        plot(z, rf, 'PDF', 'Random Forest', outdir)
+        plot(z, rf, 'PDF', 'Random Forest', outdir,
+             outname=random_forest_plot_name)
 
     elif final_pdf == 'SF':
         plt.clf()
-        plot(z, sf, '1 - CDF', 'Survival Function', outdir)
+        plot(z, sf, '1 - CDF', 'Survival Function', outdir,
+             outname=survival_function_plot_name)
 
     elif final_pdf == 'photoz':
         plt.clf()
-        plot(z, photo_z, 'PDF', title_photoz, outdir, outname='photoz')
+        plot(z, photo_z, 'PDF', title_photoz, outdir, outname=photoz_plot_name)

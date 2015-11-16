@@ -57,6 +57,11 @@ flux_filter1_err = var['flux_filter1_err']
 flux_filter2_err = var['flux_filter2_err']
 flux_filter3_err = var['flux_filter3_err']
 
+photoz_plot_name = var['photoz_plot_name']
+random_forest_plot_name = var['random_forest_plot_name']
+survival_function_plot_name = var['survival_function_plot_name']
+
+final_pdf_plot_name = var['final_pdf_plot_name']
 final_pdf_array = []
 if var['final_pdf']['RF'] == True:
     final_pdf_array.append('RF')
@@ -76,5 +81,6 @@ final_pdf += final_pdf_array[i]
 combined(final_pdf, my_dir, file_dir, filter1, filter2, filter3,
          flux_filter1, flux_filter2, flux_filter3, flux_filter1_err,
          flux_filter2_err, flux_filter3_err, outdir,
-         file_with_RF_and_SF_arrays, photo_z_type, photo_z_file,
-         photo_z_redshift_file, mu, sigma)
+         file_with_RF_and_SF_arrays, photoz_plot_name, random_forest_plot_name,
+         survival_function_plot_name, final_pdf_plot_name, photo_z_type,
+         photo_z_file, photo_z_redshift_file, mu, sigma)

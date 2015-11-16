@@ -4,7 +4,7 @@ simulated_data_dir: "n10000_phase_-5_0/"
 outdir: "/Users/carolinesofiatti/projects/SingleEpochPhotoClass/temp/plots/"
 
 # File with Random Forest and Survival Function results
-file_with_RF_and_SF_arrays: "random-forest_survival-function.p"
+file_with_RF_and_SF_arrays: "/Users/carolinesofiatti/projects/SingleEpochPhotoClass/temp/plots/random-forest_survival-function.p"
 
 final_pdf: 
     RF: yes
@@ -19,12 +19,12 @@ gauss:
     sigma: 0.2
 
 # Plot names
-photoz_plot_name: 'photoz.png'
-random_forest_plot_name: 'random-forest.png'
-survival_function_plot_name: 'survival-function.png'
+photoz_plot_name: 'cray_photoz.png'
+random_forest_plot_name: 'bbfsfsdkfjrandom-forest.png'
+survival_function_plot_name: 'booh_survival-function.png'
 # Default is concatnation of subplot names with '_' as the separator.  
 # I.e.: photoz_random-forest_survival-funtion.png
-final_pdf_plot_name: 'default' 
+final_pdf_plot_name: 'SPT2040_SE_09May15.png' 
 
 # Data
 filter1: 'f105w'
