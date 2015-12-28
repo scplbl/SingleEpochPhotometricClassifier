@@ -3,11 +3,12 @@ my_dir: "/Users/carolinesofiatti/projects/SingleEpochPhotoClass/data/"
 simulated_data_dir: "n10000_phase_-5_0/"
 outdir: "/Users/carolinesofiatti/projects/SingleEpochPhotoClass/temp/plots/"
 
-# File with Random Forest and Survival Function results
-file_with_RF_and_SF_arrays: "/Users/carolinesofiatti/projects/SingleEpochPhotoClass/temp/plots/random-forest_survival-function.p"
+# File with Random Forest and Survival Function results.
+# Code will look for (and create) file by adding outdir as prefix to filename.  
+file_with_RF_and_SF_arrays: "new_name_random-forest_survival-function.p"
 
 final_pdf: 
-    RF: yes
+    RF: no
     SF: yes
     photoz: yes
 

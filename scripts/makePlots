@@ -45,7 +45,7 @@ else:
 my_dir = var['my_dir']
 file_dir = var['simulated_data_dir']
 outdir = var['outdir']
-file_with_RF_and_SF_arrays = var['file_with_RF_and_SF_arrays']
+file_with_RF_and_SF_arrays = outdir + var['file_with_RF_and_SF_arrays']
 
 filter1 = var['filter1']
 filter2 = var['filter2']
