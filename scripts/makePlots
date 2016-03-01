@@ -19,7 +19,10 @@ if var['final_pdf']['photoz'] == True:
             sys.exit('Please specify a photoz file!')
         else:
             photo_z_file = var['file']
-            photo_z_redshift_file = None
+            try:
+                photo_z_redshift_file = var['zfile']
+            except:
+                photo_z_redshift_file = None
     else:
         photo_z_file = None
         photo_z_redshift_file = None
