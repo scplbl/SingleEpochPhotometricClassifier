@@ -5,7 +5,7 @@ outdir: "/Users/carolinesofiatti/projects/SingleEpochPhotoClass/temp/plots/"
 
 # File with Random Forest and Survival Function results.
 # Code will look for (and create) file by adding outdir as prefix to filename.  
-file_with_RF_and_SF_arrays: "new_name_random-forest_survival-function.p"
+file_with_RF_and_SF_arrays: "random-forest_survival-function.p"
 
 final_pdf: 
     RF: no
