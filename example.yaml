@@ -8,7 +8,7 @@ outdir: "/Users/carolinesofiatti/projects/SingleEpochPhotoClass/temp/plots/"
 file_with_RF_and_SF_arrays: "random-forest_survival-function.p"
 
 final_pdf: 
-    RF: no
+    RF: yes
     SF: yes
     photoz: yes
 
@@ -20,9 +20,9 @@ gauss:
     sigma: 0.2
 
 # Plot names
-photoz_plot_name: 'cray_photoz.png'
-random_forest_plot_name: 'bbfsfsdkfjrandom-forest.png'
-survival_function_plot_name: 'booh_survival-function.png'
+photoz_plot_name: 'photoz.png'
+random_forest_plot_name: 'random-forest.png'
+survival_function_plot_name: 'survival-function.png'
 # Default is concatnation of subplot names with '_' as the separator.  
 # I.e.: photoz_random-forest_survival-funtion.png
 final_pdf_plot_name: 'SPT2040_SE_09May15.png' 
@@ -39,3 +39,5 @@ flux_filter2_err: 0.553211057328
 filter3: 'uvf814w'
 flux_filter3: 0.738372793349 
 flux_filter3_err: 0.3
+
+dimension_option: '2D'

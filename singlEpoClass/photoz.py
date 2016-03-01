@@ -24,9 +24,8 @@ def find_photo_z(type, file=None, file_z=None, z=None, mu=None,
                 my_z = my_z['z']
         else:
             my_z = np.arange(0, 5, .01)
-        if np.shape(pz) != np.shape(my_z):            
+        if np.shape(pz) != np.shape(my_z):
             raise ValueError("pz array and z array are different sizes!")
-            
         func_my_photo_z = interpolate.interp1d(my_z, pz)
         my_photo_z = func_my_photo_z(z)
         my_photo_z = np.asarray(my_photo_z/my_photo_z.max())

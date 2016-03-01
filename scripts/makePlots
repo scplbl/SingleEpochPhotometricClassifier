@@ -3,6 +3,7 @@
 import yaml
 import sys
 from singlEpoClass.plots import combined
+from singlEpoClass.plots2D import combined2D
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -81,9 +82,30 @@ while i < len(final_pdf_array) - 1:
     i += 1
 final_pdf += final_pdf_array[i]
 
-combined(final_pdf, my_dir, file_dir, filter1, filter2, filter3,
-         flux_filter1, flux_filter2, flux_filter3, flux_filter1_err,
-         flux_filter2_err, flux_filter3_err, outdir,
-         file_with_RF_and_SF_arrays, photoz_plot_name, random_forest_plot_name,
-         survival_function_plot_name, final_pdf_plot_name, photo_z_type,
-         photo_z_file, photo_z_redshift_file, mu, sigma)
+try:
+    if var['dimension_option'] == '2D':
+        combined2D(final_pdf, my_dir, file_dir, filter1, filter2,
+                   flux_filter1, flux_filter2, flux_filter1_err,
+                   flux_filter2_err, outdir, file_with_RF_and_SF_arrays,
+                   photoz_plot_name, random_forest_plot_name,
+                   survival_function_plot_name, final_pdf_plot_name,
+                   photo_z_type, photo_z_file, photo_z_redshift_file, mu,
+                   sigma)
+    else:
+        combined(final_pdf, my_dir, file_dir, filter1, filter2, filter3,
+                 flux_filter1, flux_filter2, flux_filter3, flux_filter1_err,
+                 flux_filter2_err, flux_filter3_err, outdir,
+                 file_with_RF_and_SF_arrays, photoz_plot_name,
+                 random_forest_plot_name,
+                 survival_function_plot_name, final_pdf_plot_name,
+                 photo_z_type, photo_z_file, photo_z_redshift_file, mu, sigma)
+
+
+except KeyError:
+    combined(final_pdf, my_dir, file_dir, filter1, filter2, filter3,
+             flux_filter1, flux_filter2, flux_filter3, flux_filter1_err,
+             flux_filter2_err, flux_filter3_err, outdir,
+             file_with_RF_and_SF_arrays, photoz_plot_name,
+             random_forest_plot_name,
+             survival_function_plot_name, final_pdf_plot_name, photo_z_type,
+             photo_z_file, photo_z_redshift_file, mu, sigma)
